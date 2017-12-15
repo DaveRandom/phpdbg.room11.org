@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dejan Marjanovic dm@php.net">
+  <link rel="shortcut icon" href="/static/img/favicon.png">
+  <title>Remote Debugging :: phpdbg</title>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/static/css/main.css" rel="stylesheet">
+  <script src="//yandex.st/highlightjs/7.4/highlight.min.js"></script>
+  <!--[if lt IE 9]>
+  <script src="/static/js/html5shiv.js"></script>
+  <script src="/static/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"></a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="https://api.github.com/repos/krakjoe/phpdbg/zipball/v0.4.0">Download</a>
+        </li>
+        <li>
+          <a href="https://github.com/krakjoe/phpdbg-ui/raw/master/dist/phpdbg-ui.jar">Get Client</a>
+        </li>
+        <li>
+          <a href="/docs/getting-started.html">Getting started</a>
+        </li>
+        <li>
+          <a href="/docs/introduction.html">Documentation</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="content" class="gray">
+  <div id="documentation" class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="documentation-sidebar">
+          <ul class="list-unordered">
+            <li><p>Preface</p>
+              <ul>
+                <li><a href="/docs/introduction.html">Introduction</a></li>
+                <li><a href="/docs/getting-started.html">Getting Started</a></li>
+                <li><a href="/docs/simples.html">Debugging</a></li>
+              </ul>
+            </li>
+            <li><p>Examples</p>
+              <ul>
+                <li><a href="/docs/mocking-web-server.html">Mocking a Web Server</a></li>
+                <li><a href="/docs/initializing.html">Initializing phpdbg</a></li>
+                <li><a href="/docs/anywhere.html">Remote Debugging</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-8 documentation-post">
+        <h1>Remote Debugging</h1>
+        <p><em>Using phpdbg across the network</em></p>
+        <p>It is sometimes useful to execute some code in the environment that exhibits some bugs; while there is a
+          pretty good chance of being able to mock the environment that exhibited the bug on another machine, it is
+          sometimes impossible or impractical.</p>
+        <p>Remote debugging allows you to start an instance of phpdbg on any machine, and connect to it from any
+          machine, bundled is a remote client implemented in Java:</p>
+        <p><img src="https://raw.github.com/krakjoe/phpdbg-ui/master/assets/java-example.png" alt="phpdbg jui"/></p>
+        <h1>Starting phpdbg in Remote Console Mode</h1>
+        <p><em>Starting the server ...</em></p>
+        <p>Simply open a terminal on the target machine and issue the command</p>
+        <pre><code>./phpdbg -l4000
+</code></pre>
+        <p>This will initialize phpdbg in Remote Console Mode, using port 4000 for stdin and port 8000 for stdout.</p>
+        <p>To stop the service, send <em>SIGINT</em> to the phpdbg process, this will force it to bailout, as gracefully
+          as it ever does.</p>
+        <h2>Specific Ports</h2>
+        <p>To listen on specific ports, the -l flag will accept a pair of ports in the following way:</p>
+        <pre><code>./phpdbg -l4000/8000
+</code></pre>
+        <h2>Specific Interfaces</h2>
+        <p>To bind to a specific interface, or all interfaces use the -a flag:</p>
+        <pre><code>./phpdbg -l4000 -a192.168.0.3
+</code></pre>
+        <p>Will bind the Remote Console to the interface with the specified address, while:</p>
+        <pre><code>./phpdbg -l4000 -a
+</code></pre>
+        <p>Will bind the Remote Console to all available addresses.</p>
+        <h1>Starting phpdbg-jui Anywhere</h1>
+        <p><em>Java is everywhere, so is phpdbg ...</em></p>
+        <p>A JRE is needed for the bundled remote client, given any operating system with a working installation of
+          Java:</p>
+        <pre><code>java -jar /path/to/phpdbg-ui.jar
+</code></pre>
+        <p>Will initialize the bundled client, simply configure the settings accordingly and press <em>Connect</em></p>
+        <p>If disconnection is normal, the environment persists - another team member can pick up the session where it
+          is left off.</p>
+        <p>Debugging remotely is no different to debugging locally, all of the same functionality is provided
+          remotely.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="footer" class="section">
+  <div id="footer-top">
+    <div class="container">
+      <h2>Credits</h2>
+      <div class="row">
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">sapi/phpdbg</h4>
+          <ul class="list-unstyled">
+            <li>Joe Watkins</li>
+            <li>Felipe Pena</li>
+            <li>Bob Weinand</li>
+          </ul>
+        </div>
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">phpdbg.com</h4>
+          <ul class="list-unstyled">
+            <li>Dejan Marjanovic</li>
+          </ul>
+        </div>
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">Contributors</h4>
+          <ul class="list-unstyled">
+            <li>Phil Sturgeon</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/static/js/jquery.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

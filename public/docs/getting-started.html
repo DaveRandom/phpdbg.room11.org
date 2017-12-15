@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dejan Marjanovic dm@php.net">
+  <link rel="shortcut icon" href="/static/img/favicon.png">
+  <title>Getting Started :: phpdbg</title>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/static/css/main.css" rel="stylesheet">
+  <script src="//yandex.st/highlightjs/7.4/highlight.min.js"></script>
+  <!--[if lt IE 9]>
+  <script src="/static/js/html5shiv.js"></script>
+  <script src="/static/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"></a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="https://api.github.com/repos/krakjoe/phpdbg/zipball/v0.4.0">Download</a>
+        </li>
+        <li>
+          <a href="https://github.com/krakjoe/phpdbg-ui/raw/master/dist/phpdbg-ui.jar">Get Client</a>
+        </li>
+        <li>
+          <a href="/docs/getting-started.html">Getting started</a>
+        </li>
+        <li>
+          <a href="/docs/introduction.html">Documentation</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="content" class="gray">
+  <div id="documentation" class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="documentation-sidebar">
+          <ul class="list-unordered">
+            <li><p>Preface</p>
+              <ul>
+                <li><a href="/docs/introduction.html">Introduction</a></li>
+                <li><a href="/docs/getting-started.html">Getting Started</a></li>
+                <li><a href="/docs/simples.html">Debugging</a></li>
+              </ul>
+            </li>
+            <li><p>Examples</p>
+              <ul>
+                <li><a href="/docs/mocking-web-server.html">Mocking a Web Server</a></li>
+                <li><a href="/docs/initializing.html">Initializing phpdbg</a></li>
+                <li><a href="/docs/anywhere.html">Remote Debugging</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-8 documentation-post">
+        <h1>Getting started with phpdbg</h1>
+        <p><em>An introduction to debugging PHP code with phpdbg</em></p>
+
+        <p>phpdbg provides an interactive environment to debug PHP; it is implemented and distributed as a SAPI module -
+          just as the CLI interface.</p>
+
+        <p><img src="/static/welcome.png" alt="Welcome to phpdbg"/></p>
+
+        <p>phpdbg integrates with, and initializes, the Zend environment; from the moment the console is open you can
+          start to manipulate the environment in order to prepare your debugging session. If you have used other
+          debuggers, phpdbg should hopefully feel familiar, but you can always ask for <code>help</code>:</p>
+
+        <p><img src="/static/phpdbg.png" alt="phpdbg help menu"/></p>
+
+        <p>phpdbg provides help for all of the supported commands.</p>
+
+        <h1>Breaking execution</h1>
+
+        <p><em>Telling phpdbg when to stop ...</em></p>
+
+        <p>In order to debug your code, execution must be interrupted at very specific points during execution, and
+          allow access to, and inspection of, the execution environment. phpdbg can step through the execution of your
+          script, showing you information about every opcode the VM executes, including the address (in case you need to
+          break at that specific point on the next execution).</p>
+
+        <p>phpdbg provides many options for specifying breakpoints:</p>
+
+        <p><img src="/static/help-break.png" alt="phpdbg help menu"/></p>
+
+        <p>phpdbg also includes a userland API to enable working with breakpoints from within your PHP code:</p>
+
+        <pre><code>/**
+* If no parameters are recieved sets a breakpoint at the next opcode address
+* @param type           a constant PHPDBG_ type
+* @param expression     the expression for the break command
+* @return void
+*/
+proto void phpdbg_break([integer type, string expression]);
+</code></pre>
+
+        <p>The following type constants are registered by phpdbg:</p>
+
+        <ul>
+          <li>PHPDBG_FILE</li>
+          <li>PHPDBG_METHOD</li>
+          <li>PHPDBG_LINENO</li>
+          <li>PHPDBG_FUNC</li>
+        </ul>
+
+        <pre><code>/**
+* Clear breakpoints before continuing execution
+* @return void
+*/
+proto void phpdbg_clear(void);
+</code></pre>
+
+        <h1>Inspecting the environment</h1>
+
+        <p><em>Finding out what went wrong</em></p>
+
+        <p>When a breakpoint is reached, control is passed back to the phpdbg console, execution will not continue until
+          the <em>next</em> command is issued, a breakpoint being reached looks something like:</p>
+
+        <p><img src="/static/show-broken.png" alt="phpdbg broken"/></p>
+
+        <p>Now is the time to get down to some serious <code>evil()</code>, er, I mean <code>eval()</code>.</p>
+
+        <p>Direct access to <code>eval()</code> allows you to change <em>anything</em> at <em>any</em> time during
+          execution. Helpful printing and listing commands help you to make sense of addresses and remind you of the
+          names of the variables you want to <code>var_dump()</code>!</p>
+
+        <p>Library code for this section:</p>
+
+        <pre><code>&lt;?php
+class phpdbg {
+    public function isGreat($greeting = null) {
+        printf(
+            &quot;%s: %s\n&quot;, __METHOD__, $greeting);
+        return $this;
+    }
+}
+
+$dbg = new phpdbg();
+
+var_dump($dbg-&gt;isGreat(&quot;PHP Rocks !!&quot;));
+?&gt;
+</code></pre>
+
+        <h1>Being precise</h1>
+
+        <p><em>Don't be sloppy, ever ... true story</em></p>
+
+        <p>The ability to break at function entry, or even on a single statement, is not always exact enough. A single
+          statement may have many opcodes and it could be any of those instructions that are ruining your day. phpdbg
+          allows you to specify an exact opcode address and provides the ability to view the instructions of any method
+          or function before execution occurs.</p>
+
+        <p>Looking up addresses is made easy by the <code>print</code> command</p>
+
+        <p><img src="/static/show-printing.png" alt="phpdbg verbose"/></p>
+
+        <p>For simple scripts, like the library code in the last section, and times when you want as much detail as
+          possible, the <code>quiet</code> flag can be changed to <code>0</code> (default is <code>1</code>):</p>
+
+        <p><img src="/static/show-verbose.png" alt="phpdbg verbose"/></p>
+
+        <h1>Mocking a server</h1>
+
+        <p><em>Mocking is easy!</em></p>
+
+        <p>Mocking a specific environment is child's play; simply include a bootstrap file before you run, or have your
+          code include it. </p>
+
+        <p>An example of such a file can be found in the repository:</p>
+
+        <p>https://github.com/krakjoe/phpdbg/blob/master/web-bootstrap.php</p>
+
+        <h1>Advice you can keep</h1>
+
+        <p><em>The reason for all the images...</em></p>
+
+        <p>The best thing about this tutorial is you take all of the help with you when you install phpdbg. Don't be
+          afraid to ask for <code>help</code>! :)</p>
+
+        <p>Happy PHPing. :)</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="footer" class="section">
+  <div id="footer-top">
+    <div class="container">
+      <h2>Credits</h2>
+      <div class="row">
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">sapi/phpdbg</h4>
+          <ul class="list-unstyled">
+            <li>Joe Watkins</li>
+            <li>Felipe Pena</li>
+            <li>Bob Weinand</li>
+          </ul>
+        </div>
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">phpdbg.com</h4>
+          <ul class="list-unstyled">
+            <li>Dejan Marjanovic</li>
+          </ul>
+        </div>
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">Contributors</h4>
+          <ul class="list-unstyled">
+            <li>Phil Sturgeon</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/static/js/jquery.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

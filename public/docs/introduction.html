@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dejan Marjanovic dm@php.net">
+  <link rel="shortcut icon" href="/static/img/favicon.png">
+  <title>Introduction :: phpdbg</title>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/static/css/main.css" rel="stylesheet">
+  <script src="//yandex.st/highlightjs/7.4/highlight.min.js"></script>
+  <!--[if lt IE 9]>
+  <script src="/static/js/html5shiv.js"></script>
+  <script src="/static/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"></a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="https://api.github.com/repos/krakjoe/phpdbg/zipball/v0.4.0">Download</a>
+        </li>
+        <li>
+          <a href="https://github.com/krakjoe/phpdbg-ui/raw/master/dist/phpdbg-ui.jar">Get Client</a>
+        </li>
+        <li>
+          <a href="/docs/getting-started.html">Getting started</a>
+        </li>
+        <li>
+          <a href="/docs/introduction.html">Documentation</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="content" class="gray">
+  <div id="documentation" class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="documentation-sidebar">
+          <ul class="list-unordered">
+            <li><p>Preface</p>
+              <ul>
+                <li><a href="/docs/introduction.html">Introduction</a></li>
+                <li><a href="/docs/getting-started.html">Getting Started</a></li>
+                <li><a href="/docs/simples.html">Debugging</a></li>
+              </ul>
+            </li>
+            <li><p>Examples</p>
+              <ul>
+                <li><a href="/docs/mocking-web-server.html">Mocking a Web Server</a></li>
+                <li><a href="/docs/initializing.html">Initializing phpdbg</a></li>
+                <li><a href="/docs/anywhere.html">Remote Debugging</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-8 documentation-post">
+        <h1>The interactive PHP debugger</h1>
+        <p>Implemented as a SAPI module, phpdbg can exert complete control over the environment without impacting the
+          functionality or performance of your code.</p>
+        <p>phpdbg aims to be a lightweight, powerful, easy to use debugging platform for PHP5.4+</p>
+        <h1>Features</h1>
+        <ul>
+          <li>Step-Through Debugging</li>
+          <li>Flexible Breakpoints (Class Method, Function, File:Line, Address, Opcode)</li>
+          <li>Easy Access to PHP with built-in eval()</li>
+          <li>Easy Access to Currently Executing Code</li>
+          <li>Userland API</li>
+          <li>SAPI Agnostic - Easily Integrated</li>
+          <li>PHP Configuration File Support</li>
+          <li>JIT Super Globals - Set Your Own !!</li>
+          <li>Optional readline Support - Comfortable Terminal Operation</li>
+          <li>Remote Debugging Support - Bundled Java GUI</li>
+          <li>Easy Operation - See Help :)</li>
+        </ul>
+        <h1>Planned</h1>
+        <ul>
+          <li>Improve Everything :)</li>
+        </ul>
+        <h1>Installation</h1>
+        <p>To install <strong>phpdbg</strong>, you must compile the source against your PHP installation sources, and
+          enable the SAPI with the configure command.</p>
+        <pre><code>cd /usr/src/php-src/sapi
+git clone https://github.com/krakjoe/phpdbg
+cd ../
+./buildconf --force
+./config.nice
+make -j8
+make install-phpdbg
+</code></pre>
+        <p><em>Note: php must be configured with the switch --with-readline for phpdbg to support history,
+          autocompletion, tab-listing etc</em></p>
+        <h1>Command Line Options</h1>
+        <p>The following switches are implemented (just like cli SAPI):</p>
+        <ul>
+          <li>-n ignore php ini</li>
+          <li>-c search for php ini in path</li>
+          <li>-z load zend extension</li>
+          <li>-d define php ini entry</li>
+        </ul>
+        <p>The following switches change the default behaviour of phpdbg:</p>
+        <ul>
+          <li>-v disables quietness</li>
+          <li>-s enabled stepping</li>
+          <li>-e sets execution context</li>
+          <li>-b boring - disables use of colour on the console</li>
+          <li>-I ignore .phpdbginit (default init file)</li>
+          <li>-i override .phpgdbinit location (implies -I)</li>
+          <li>-O set oplog output file</li>
+          <li>-q do not print banner on startup</li>
+          <li>-r jump straight to run</li>
+          <li>-E enable step through eval()</li>
+        </ul>
+        <p><em>Note: passing -rr will cause phpdbg to quit after execution, rather than returning to the console</em>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="footer" class="section">
+  <div id="footer-top">
+    <div class="container">
+      <h2>Credits</h2>
+      <div class="row">
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">sapi/phpdbg</h4>
+          <ul class="list-unstyled">
+            <li>Joe Watkins</li>
+            <li>Felipe Pena</li>
+            <li>Bob Weinand</li>
+          </ul>
+        </div>
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">phpdbg.com</h4>
+          <ul class="list-unstyled">
+            <li>Dejan Marjanovic</li>
+          </ul>
+        </div>
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">Contributors</h4>
+          <ul class="list-unstyled">
+            <li>Phil Sturgeon</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/static/js/jquery.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dejan Marjanovic dm@php.net">
+  <link rel="shortcut icon" href="/static/img/favicon.png">
+  <title>phpdbg</title>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/static/css/main.css" rel="stylesheet">
+  <script src="//yandex.st/highlightjs/7.4/highlight.min.js"></script>
+  <!--[if lt IE 9]>
+  <script src="/static/js/html5shiv.js"></script>
+  <script src="/static/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"></a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="https://api.github.com/repos/krakjoe/phpdbg/zipball/v0.4.0">Download</a>
+        </li>
+        <li>
+          <a href="https://github.com/krakjoe/phpdbg-ui/raw/master/dist/phpdbg-ui.jar">Get Client</a>
+        </li>
+        <li>
+          <a href="/docs/getting-started.html">Getting started</a>
+        </li>
+        <li>
+          <a href="/docs/introduction.html">Documentation</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="content" class="">
+  <div class="jumbotron">
+    <div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="10000">
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
+        <li data-target="#myCarousel" data-slide-to="4"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 carousel-text text-center">
+                <h1>Integrated into PHP 5.6 core!</h1>
+                <p>40:0 vote confirms the awesomeness.</p>
+                <p><a class="btn btn-lg btn-primary" href="/docs/getting-started.html" role="button">Awesomesauce</a>
+                </p>
+              </div>
+              <div class="col-md-6"></div>
+            </div>
+            <div class="mbp-screen download">
+              <a href="https://api.github.com/repos/krakjoe/phpdbg/zipball/v0.4.0">
+                <p><i class="fa fa-cloud-download"></i></p>
+                <p class="pixel-twist">v0.4.0</p>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 carousel-text text-center">
+                <h1>Lightweight, powerful, easy.</h1>
+                <p><i>The</i> debugging platform for PHP5.4+</p>
+                <p><a class="btn btn-lg btn-primary" href="/docs/getting-started.html" role="button">Awesomesauce</a>
+                </p>
+              </div>
+              <div class="col-md-6"></div>
+            </div>
+            <div class="mbp-screen download">
+              <a href="https://api.github.com/repos/krakjoe/phpdbg/zipball/v0.4.0">
+                <p><i class="fa fa-cloud-download"></i></p>
+                <p class="pixel-twist">v0.4.0</p>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 carousel-text text-center">
+                <h1>Terminal Powah !</h1>
+                <p><i>phpdbg</i> requires nothing from your IDE</p>
+                <p><a class="btn btn-lg btn-primary" href="/docs/getting-started.html" role="button">Awesomesauce</a>
+                </p>
+              </div>
+              <div class="col-md-6"></div>
+            </div>
+            <img class="mbp-screen" src="/static/img/powah.png"/>
+          </div>
+        </div>
+        <div class="item">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 carousel-text text-center">
+                <h1>File Access</h1>
+                <p><i>phpdbg</i> provides quick access to file contents with a listing facility, which understands what
+                  a method is !</p>
+                <p><a class="btn btn-lg btn-primary" href="/docs/getting-started.html" role="button">Awesomesauce</a>
+                </p>
+              </div>
+              <div class="col-md-6"></div>
+            </div>
+            <img class="mbp-screen" src="/static/img/listing.png"/>
+          </div>
+        </div>
+        <div class="item">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 carousel-text text-center">
+                <h1>Open Source</h1>
+                <p>Made by PHP developers</p>
+                <p><a class="btn btn-lg btn-primary" href="/docs/getting-started.html" role="button">Awesomesauce</a></p>
+              </div>
+              <div class="col-md-6"></div>
+            </div>
+            <img class="mbp-screen mbp-screen-gif" src="/static/img/screenie_2.gif"/>
+          </div>
+        </div>
+      </div>
+      <div class="container"><img class="mbp" src="/static/img/mbp.png"/></div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+    <div class="carousel-bottom"></div>
+  </div>
+  <div class="container">
+    <div class="features">
+      <div class="row">
+        <div class="col-lg-6">
+          <h4>Step-Through Debugging</h4>
+          <p>Inspect and affect the environment after the execution of each opcode.</p>
+          <h4>Flexible Breakpoints</h4>
+          <p>Allow you to specify very precisely when to break execution.</p>
+          <h4>Easy Access to PHP with built-in <code>eval()</code></h4>
+          <p>The power of PHP available to every command issued!</p>
+          <h4>Disassembly of PHP Code</h4>
+          <p>Detailed disassembly enables precise debugging.</p>
+        </div>
+        <div class="col-lg-6">
+          <h4>Easy Access to Currently Executing Code</h4>
+          <p>Listing code while executing keeps your eyes where the action is.</p>
+          <h4>Userland API</h4>
+          <p>Allows your applications to interact with and setup phpdbg.</p>
+          <h4>SAPI Agnostic - Easily Integrated</h4>
+          <p>Take me anywhere :)</p>
+          <h4>Remote Debugging</h4>
+          <p>phpdbg can act as a debugging server, Java client included.</p>
+          <h4>PHP5.6+ core SAPI</h4>
+          <p>From PHP5.6 phpdbg is included with PHP.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="swag" class="jumbotron jumbo">
+    <div class="container fixed">
+      <div class="text"></div>
+    </div>
+    <div class="particles"></div>
+  </div>
+  <div class="container">
+    <div class="contributors text-center" style="">
+      <h1 class="text-center">Get started by reading the <a href="/docs/introduction.html">Documentation</a></h1>
+      <p class="lead">Join <del>the dark side</del> us and submit your <a href="https://github.com/krakjoe/phpdbg">pull requests</a> :)</p>
+      <ul class="list-inline">
+        <li><a href="https://github.com/krakjoe"><img src="//2.gravatar.com/avatar/226e74fa2c8f49fbf266bb2acb322eb6" alt="krakjoe"/></a></li>
+        <li><a href="https://github.com/felipensp"><img src="//1.gravatar.com/avatar/7a0911ba58785d161584ae591bbd0092" alt="felipe"/></a></li>
+        <li><a href="https://github.com/webarto"><img src="//0.gravatar.com/avatar/e26f30814011893c74b315a8b2a1f8a8" alt="dejan"/></a></li>
+        <li><a href="https://github.com/salathe"><img src="//0.gravatar.com/avatar/689ee830fa6ea2cd15ffa4dfd90e215e" alt="salathe"/></a></li>
+        <li><a href="https://github.com/bwoebi"><img src="//identicons.github.com/e5f4d8f8bf14f26d7a89e020162981b4.png" alt="bwoebi"/></a></li>
+      </ul>
+      <p class="lead">
+        <a href="https://github.com/krakjoe/phpdbg/archive/v0.4.0.zip">Download</a>
+        <code>v0.4.0</code>
+      </p>
+    </div>
+  </div>
+</div>
+<div id="footer" class="section">
+  <div id="footer-top">
+    <div class="container">
+      <h2>Credits</h2>
+      <div class="row">
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">sapi/phpdbg</h4>
+          <ul class="list-unstyled">
+            <li>Joe Watkins</li>
+            <li>Felipe Pena</li>
+            <li>Bob Weinand</li>
+          </ul>
+        </div>
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">phpdbg.com</h4>
+          <ul class="list-unstyled">
+            <li>Dejan Marjanovic</li>
+          </ul>
+        </div>
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">Contributors</h4>
+          <ul class="list-unstyled">
+            <li>Phil Sturgeon</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/static/js/jquery.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

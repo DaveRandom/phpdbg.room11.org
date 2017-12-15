@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dejan Marjanovic dm@php.net">
+  <link rel="shortcut icon" href="/static/img/favicon.png">
+  <title>Initializing :: phpdbg</title>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/static/css/main.css" rel="stylesheet">
+  <script src="//yandex.st/highlightjs/7.4/highlight.min.js"></script>
+  <!--[if lt IE 9]>
+  <script src="/static/js/html5shiv.js"></script>
+  <script src="/static/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"></a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="https://api.github.com/repos/krakjoe/phpdbg/zipball/v0.4.0">Download</a>
+        </li>
+        <li>
+          <a href="https://github.com/krakjoe/phpdbg-ui/raw/master/dist/phpdbg-ui.jar">Get Client</a>
+        </li>
+        <li>
+          <a href="/docs/getting-started.html">Getting started</a>
+        </li>
+        <li>
+          <a href="/docs/introduction.html">Documentation</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="content" class="gray">
+  <div id="documentation" class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="documentation-sidebar">
+          <ul class="list-unordered">
+            <li><p>Preface</p>
+              <ul>
+                <li><a href="/docs/introduction.html">Introduction</a></li>
+                <li><a href="/docs/getting-started.html">Getting Started</a></li>
+                <li><a href="/docs/simples.html">Debugging</a></li>
+              </ul>
+            </li>
+            <li><p>Examples</p>
+              <ul>
+                <li><a href="/docs/mocking-web-server.html">Mocking a Web Server</a></li>
+                <li><a href="/docs/initializing.html">Initializing phpdbg</a></li>
+                <li><a href="/docs/anywhere.html">Remote Debugging</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-8 documentation-post">
+        <h1>Initializing</h1>
+        <h3>phpdbginit</h3>
+
+        <p><em>Setting up your debugging session automatically</em></p>
+
+        <p>By default, phpdbg looks for <em>.phpdbginit</em> in the current working directory, this location can be
+          overridden on the command line:</p>
+
+        <pre><code>phpdbg -imy.phpdbginit
+</code></pre>
+
+        <p>An init file should contain one command per line, any phpdbg command is supported during init.</p>
+
+        <p>In addition, <em>.phpdbginit</em> can contain embedded code, allowing, for example </p>
+
+        <ul>
+          <li>the setup of auto completion</li>
+          <li>the registration of functions</li>
+          <li>the acquisition and pre-compilation of code</li>
+          <li>bootstrapping a web application</li>
+        </ul>
+
+        <p>It is common for C projects (PHP included) to include an init file for the GDB debugger; this would be a
+          clever practice to adopt
+          for those distributing PHP library code.</p>
+
+        <h1>The default .phpdbginit</h1>
+
+        <p>We distribute the following init file by default, it should be copied to any directory you commonly execute
+          in:</p>
+
+        <pre><code>##########################################################
+# .phpdbginit
+#
+# Lines starting with # are ignored
+# Code must start and end with &lt;: and :&gt; respectively
+##########################################################
+# Place initialization commands one per line
+##########################################################
+# exec sapi/phpdbg/test.php
+
+##########################################################
+# Embedding code in .phpdbginit
+##########################################################
+&lt;:
+/*
+ If readline is loaded, you might want to setup completion:
+*/
+if (function_exists('readline_completion_function')) {
+    readline_completion_function(function(){
+        return array_merge(
+            get_defined_functions()['user'],
+            array_keys(get_defined_constants())
+        );
+    });
+}
+:&gt;
+##########################################################
+# Now carry on initializing phpdbg ...
+##########################################################
+# R my_debugging_function
+
+##########################################################
+# PHP has many functions that might be useful
+# ... you choose ...
+##########################################################
+# R touch
+# R unlink
+# R scandir
+# R glob
+
+##########################################################
+# Remember: *you have access to the shell*
+##########################################################
+# The output of registered function calls is not,
+# by default, very pretty (unless you implement
+# and register a new implementation for phpdbg)
+# The output of shell commands will usually be more
+# readable on the console
+##########################################################
+# TL;DR if you have a good shell, use it ...
+##########################################################
+</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="footer" class="section">
+  <div id="footer-top">
+    <div class="container">
+      <h2>Credits</h2>
+      <div class="row">
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">sapi/phpdbg</h4>
+          <ul class="list-unstyled">
+            <li>Joe Watkins</li>
+            <li>Felipe Pena</li>
+            <li>Bob Weinand</li>
+          </ul>
+        </div>
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">phpdbg.com</h4>
+          <ul class="list-unstyled">
+            <li>Dejan Marjanovic</li>
+          </ul>
+        </div>
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">Contributors</h4>
+          <ul class="list-unstyled">
+            <li>Phil Sturgeon</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/static/js/jquery.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

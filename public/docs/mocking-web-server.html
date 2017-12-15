@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dejan Marjanovic dm@php.net">
+  <link rel="shortcut icon" href="/static/img/favicon.png">
+  <title>Mocking a Web Server :: phpdbg</title>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/static/css/main.css" rel="stylesheet">
+  <script src="//yandex.st/highlightjs/7.4/highlight.min.js"></script>
+  <!--[if lt IE 9]>
+  <script src="/static/js/html5shiv.js"></script>
+  <script src="/static/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"></a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="https://api.github.com/repos/krakjoe/phpdbg/zipball/v0.4.0">Download</a>
+        </li>
+        <li>
+          <a href="https://github.com/krakjoe/phpdbg-ui/raw/master/dist/phpdbg-ui.jar">Get Client</a>
+        </li>
+        <li>
+          <a href="/docs/getting-started.html">Getting started</a>
+        </li>
+        <li>
+          <a href="/docs/introduction.html">Documentation</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="content" class="gray">
+  <div id="documentation" class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="documentation-sidebar">
+          <ul class="list-unordered">
+            <li><p>Preface</p>
+              <ul>
+                <li><a href="/docs/introduction.html">Introduction</a></li>
+                <li><a href="/docs/getting-started.html">Getting Started</a></li>
+                <li><a href="/docs/simples.html">Debugging</a></li>
+              </ul>
+            </li>
+            <li><p>Examples</p>
+              <ul>
+                <li><a href="/docs/mocking-web-server.html">Mocking a Web Server</a></li>
+                <li><a href="/docs/initializing.html">Initializing phpdbg</a></li>
+                <li><a href="/docs/anywhere.html">Remote Debugging</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-8 documentation-post">
+        <h1>Mocking a Web Server</h1>
+        <p>The following file shows an example bootstrap for a web application, inclusion of such a file before
+          execution can be used
+          to mock a specific, possibly buggy request (or otherwise) execution environment inside of phpdbg.</p>
+
+        <pre><code>&lt;?php
+/**
+* Bootstrapping ...
+*/
+if (!defined('PHPDBG_BOOTSTRAPPED'))
+{
+    /* define these once */
+    define(&quot;PHPDBG_BOOTPATH&quot;, &quot;/opt/php-zts/htdocs&quot;);
+    define(&quot;PHPDBG_BOOTSTRAP&quot;, &quot;index.php&quot;);
+    define(&quot;PHPDBG_BOOTSTRAPPED&quot;, sprintf(
+        &quot;/%s&quot;, PHPDBG_BOOTSTRAP));
+}
+
+/*
+* Superglobals are JIT, phpdbg will not over-write 
+* whatever is set during bootstrap
+*/
+
+$_SERVER = array
+(
+  'HTTP_HOST' =&gt; 'localhost',
+  'HTTP_CONNECTION' =&gt; 'keep-alive',
+  'HTTP_ACCEPT' =&gt; '...',
+  'HTTP_USER_AGENT' =&gt; '...',
+  'HTTP_ACCEPT_ENCODING' =&gt; 'gzip,deflate,sdch',
+  'HTTP_ACCEPT_LANGUAGE' =&gt; 'en-US,en;q=0.8',
+  'HTTP_COOKIE' =&gt; '...',
+  'PATH' =&gt; '/usr/local/bin:/usr/bin:/bin',
+  'SERVER_SIGNATURE' =&gt; '...',
+  'SERVER_SOFTWARE' =&gt; '...',
+  'SERVER_NAME' =&gt; 'localhost',
+  'SERVER_ADDR' =&gt; '127.0.0.1',
+  'SERVER_PORT' =&gt; '80',
+  'REMOTE_ADDR' =&gt; '127.0.0.1',
+  'DOCUMENT_ROOT' =&gt; PHPDBG_BOOTPATH,
+  'REQUEST_SCHEME' =&gt; 'http',
+  'CONTEXT_PREFIX' =&gt; '',
+  'CONTEXT_DOCUMENT_ROOT' =&gt; PHPDBG_BOOTPATH,
+  'SERVER_ADMIN' =&gt; '[no address given]',
+  'SCRIPT_FILENAME' =&gt; sprintf(
+    '%s/%s', PHPDBG_BOOTPATH, PHPDBG_BOOTSTRAP
+  ),
+  'REMOTE_PORT' =&gt; '47931',
+  'GATEWAY_INTERFACE' =&gt; 'CGI/1.1',
+  'SERVER_PROTOCOL' =&gt; 'HTTP/1.1',
+  'REQUEST_METHOD' =&gt; 'GET',
+  'QUERY_STRING' =&gt; '',
+  'REQUEST_URI' =&gt; PHPDBG_BOOTSTRAPPED,
+  'SCRIPT_NAME' =&gt; PHPDBG_BOOTSTRAPPED,
+  'PHP_SELF' =&gt; PHPDBG_BOOTSTRAPPED,
+  'REQUEST_TIME' =&gt; time(),
+);
+
+$_GET = array();
+$_REQUEST = array();
+$_POST = array();
+$_COOKIE = array();
+$_FILES = array();
+
+chdir(PHPDBG_BOOTPATH);
+
+</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="footer" class="section">
+  <div id="footer-top">
+    <div class="container">
+      <h2>Credits</h2>
+      <div class="row">
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">sapi/phpdbg</h4>
+          <ul class="list-unstyled">
+            <li>Joe Watkins</li>
+            <li>Felipe Pena</li>
+            <li>Bob Weinand</li>
+          </ul>
+        </div>
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">phpdbg.com</h4>
+          <ul class="list-unstyled">
+            <li>Dejan Marjanovic</li>
+          </ul>
+        </div>
+        <div class="footer-credits col-md-4">
+          <h4 class="list-pixel">Contributors</h4>
+          <ul class="list-unstyled">
+            <li>Phil Sturgeon</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/static/js/jquery.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
