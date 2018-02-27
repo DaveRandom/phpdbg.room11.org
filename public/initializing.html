@@ -8,9 +8,7 @@
   <link rel="shortcut icon" href="/img/favicon.png">
   <title>Initializing :: phpdbg</title>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="/css/main.css" rel="stylesheet">
-  <script src="//yandex.st/highlightjs/7.4/highlight.min.js"></script>
   <!--[if lt IE 9]>
   <script src="/js/html5shiv.js"></script>
   <script src="/js/respond.min.js"></script>
@@ -74,8 +72,7 @@
         <p>By default, phpdbg looks for <em>.phpdbginit</em> in the current working directory, this location can be
           overridden on the command line:</p>
 
-        <pre><code>phpdbg -imy.phpdbginit
-</code></pre>
+        <pre><code class="nohighlight">phpdbg -imy.phpdbginit</code></pre>
 
         <p>An init file should contain one command per line, any phpdbg command is supported during init.</p>
 
@@ -97,7 +94,7 @@
         <p>We distribute the following init file by default, it should be copied to any directory you commonly execute
           in:</p>
 
-        <pre><code>##########################################################
+        <pre><code class="php">##########################################################
 # .phpdbginit
 #
 # Lines starting with # are ignored
@@ -182,8 +179,12 @@ if (function_exists('readline_completion_function')) {
     </div>
   </div>
 </div>
-<script src="/js/jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/cpp.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/php.min.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet">
 <script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>

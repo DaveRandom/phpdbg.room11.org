@@ -10,7 +10,6 @@
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="/css/main.css" rel="stylesheet">
-  <script src="//yandex.st/highlightjs/7.4/highlight.min.js"></script>
   <!--[if lt IE 9]>
   <script src="/js/html5shiv.js"></script>
   <script src="/js/respond.min.js"></script>
@@ -69,84 +68,58 @@
         <h1>Simples</h1>
         <p>It is easy to imagine that debugging a whole web application might be difficult, in a console program, in
           fact this is not the case:</p>
-
         <p><strong>A web application is just an instance of the PHP interpreter with some very specific super globals
           set.</strong></p>
-
         <p>With everything in the correct place, your web application has no clue that it being served not to a client,
           but to you, probably in your underwear.</p>
-
         <p>With the facts established, you can use phpdbg to debug anything that is PHP, with a bit of cleverness in the
           right places.</p>
-
         <h1>Very Simple</h1>
-
         <p><em>A good starting place ...</em></p>
-
-        <pre><code>phpdbg -e/path/to/my/script.php
-</code></pre>
-
+        <pre><code>phpdbg -e/path/to/my/script.php</code></pre>
         <p>The command above will result in a phpdbg console that has executed <em>.phpdbginit</em> (if it exists) and
           is ready to compile, inspect, step through
           and execute the code contained in <em>/path/to/my/script.php</em></p>
-
         <p>The first thing to do upon being presented with the console, is decide what to break for ...</p>
-
         <p>Many options exist for choosing (and setting) breakpoints:</p>
-
         <pre><code>phpdbg&gt; b phpdbg::isGreat
 phpdbg&gt; b phpdbg_is_great
 </code></pre>
-
         <p>The commands above will be the most common for most developers; that is, specifying the entry point of a
           function or method on which to break execution.</p>
-
         <p>Introspection of code is supported on the console, for anything that is compiled, if help is required
           remembering the name of a particular method then issue:</p>
-
         <pre><code>phpdbg&gt; compile
 phpdbg&gt; print class myClassName
 </code></pre>
-
         <p>Introspection doesn't only provide you with names, but the addresses of every opcode in every statement,
           which you may use to specify with as much precision as
           is possible where to break execution.</p>
-
         <p><strong>There is a print command for particular methods, useful if a class is very large and your screen is
           not !</strong></p>
-
         <p>At this point, break points are set; the next thing to do is issue the run command:</p>
-
-        <pre><code>phpdbg&gt; run
-</code></pre>
-
+        <pre><code>phpdbg&gt; run</code></pre>
         <p>This will cause execution of the context, if a breakpoint is reached, the interactive console returns such
           that more commands can be issued.</p>
-
         <p>When a breakpoint is reached, several options for continuation exist:</p>
-
         <ul>
           <li>step through every instruction</li>
           <li>run past the end of the stack</li>
           <li>run to the end of the stack</li>
         </ul>
-
         <p><em>Q: WTF is a stack?</em></p>
-
         <p><em>A: Generally the current codepath, more precisely: current function, method or file</em></p>
-
         <p>Just quickly; an explanation of what "to" and "past" the end of a "stack" means:</p>
-
         <p>Assuming there is a break set for <em>my<em>function</em>somewhere</em> in the following code:</p>
-
-        <pre><code>function my_function_somewhere($input = array()) /* break here on entry to the function */
-{       
+        <pre><code>/* break here on entry to the function */
+function my_function_somewhere($input = array())
+{
     /* ... the stack ... */
-    
-    if (count($input)) 
+
+    if (count($input))
     {
         /* to -&gt; */  return $input[1];
-    } 
+    }
     else
     {
         /* to -&gt; */ return rand(1, 100);
@@ -154,55 +127,34 @@ phpdbg&gt; print class myClassName
 }
 
 /* past -&gt; */ $result = my_function_somewhere();
-if ($result) 
+if ($result)
 {
     /* and so on */
     var_dump($result);
 }
 </code></pre>
-
         <p>The commands <em>finish</em> and <em>leave</em>, run <em>past</em> and <em>to</em> the end of the stack
           respectively.</p>
-
         <p><strong>Note: the finish command does not automatically break; to break past the end of the stack enable
           stepping before issuing finish, the leave command breaks implicitly</strong></p>
-
         <h1>On with execution ...</h1>
-
         <p><em>Stepping, slowly, is sometimes the way forward ...</em></p>
-
         <p>Should you want to inspect what happens during the execution of the stack, enable stepping:</p>
-
-        <pre><code>phpdbg&gt; step 1
-</code></pre>
-
+        <pre><code>phpdbg&gt; step 1</code></pre>
         <p>In case it wasn't obvious, the next thing to do is nearly always <em>next</em>:</p>
-
-        <pre><code>phpdbg&gt; next
-</code></pre>
-
+        <pre><code>phpdbg&gt; next</code></pre>
         <p>Which will cause the vm to assume control and continue execution until the next break point, or
           completion.</p>
-
         <p>Stepping through every single instruction is not usually beneficial, issue:</p>
-
-        <pre><code>phpdbg&gt; step 0
-</code></pre>
-
+        <pre><code>phpdbg&gt; step 0</code></pre>
         <p>To disable stepping again, and only interrupt execution for breakpoints.</p>
-
         <h1>As hard as it gets ...</h1>
-
         <p><em>Web Applications</em></p>
-
         <p>As mentioned, a web application is only a script executing with some specific super globals set; </p>
-
         <p><strong>The mocking of any web request just requires that you set the super globals of the script
           accordingly</strong></p>
-
         <p>We refer to this as "bootstrapping", mostly because I have always wanted a genuine reason to use that
           word.</p>
-
         <p>See the example, for help with bootstrapping ...</p>
       </div>
     </div>
@@ -237,8 +189,12 @@ if ($result)
     </div>
   </div>
 </div>
-<script src="/js/jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/cpp.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/php.min.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet">
 <script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>

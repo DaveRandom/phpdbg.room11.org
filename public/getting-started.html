@@ -8,9 +8,7 @@
   <link rel="shortcut icon" href="/img/favicon.png">
   <title>Getting Started :: phpdbg</title>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="/css/main.css" rel="stylesheet">
-  <script src="//yandex.st/highlightjs/7.4/highlight.min.js"></script>
   <!--[if lt IE 9]>
   <script src="/js/html5shiv.js"></script>
   <script src="/js/respond.min.js"></script>
@@ -68,82 +66,59 @@
       <div class="col-md-8 documentation-post">
         <h1>Getting started with phpdbg</h1>
         <p><em>An introduction to debugging PHP code with phpdbg</em></p>
-
         <p>phpdbg provides an interactive environment to debug PHP; it is implemented and distributed as a SAPI module -
           just as the CLI interface.</p>
-
         <p><img src="/img/welcome.png" alt="Welcome to phpdbg"/></p>
-
         <p>phpdbg integrates with, and initializes, the Zend environment; from the moment the console is open you can
           start to manipulate the environment in order to prepare your debugging session. If you have used other
           debuggers, phpdbg should hopefully feel familiar, but you can always ask for <code>help</code>:</p>
-
         <p><img src="/img/phpdbg.png" alt="phpdbg help menu"/></p>
-
         <p>phpdbg provides help for all of the supported commands.</p>
-
         <h1>Breaking execution</h1>
-
         <p><em>Telling phpdbg when to stop ...</em></p>
-
         <p>In order to debug your code, execution must be interrupted at very specific points during execution, and
           allow access to, and inspection of, the execution environment. phpdbg can step through the execution of your
           script, showing you information about every opcode the VM executes, including the address (in case you need to
           break at that specific point on the next execution).</p>
-
         <p>phpdbg provides many options for specifying breakpoints:</p>
-
         <p><img src="/img/help-break.png" alt="phpdbg help menu"/></p>
-
         <p>phpdbg also includes a userland API to enable working with breakpoints from within your PHP code:</p>
-
         <pre><code>/**
-* If no parameters are recieved sets a breakpoint at the next opcode address
-* @param type           a constant PHPDBG_ type
-* @param expression     the expression for the break command
-* @return void
-*/
-proto void phpdbg_break([integer type, string expression]);
+ * If no parameters are recieved sets a breakpoint at the next
+ * opcode address
+ *
+ * @param $type  A constant PHPDBG_ type
+ * @param $expr  The expression for the break command
+ */
+function phpdbg_break(int $type = null, string $expr = null): void;
 </code></pre>
-
         <p>The following type constants are registered by phpdbg:</p>
-
         <ul>
-          <li>PHPDBG_FILE</li>
-          <li>PHPDBG_METHOD</li>
-          <li>PHPDBG_LINENO</li>
-          <li>PHPDBG_FUNC</li>
+          <li><code>PHPDBG_FILE</code></li>
+          <li><code>PHPDBG_METHOD</code></li>
+          <li><code>PHPDBG_LINENO</code></li>
+          <li><code>PHPDBG_FUNC</code></li>
         </ul>
-
         <pre><code>/**
-* Clear breakpoints before continuing execution
-* @return void
-*/
-proto void phpdbg_clear(void);
+ * Clear breakpoints before continuing execution
+ */
+function phpdbg_clear(): void;
 </code></pre>
-
         <h1>Inspecting the environment</h1>
-
         <p><em>Finding out what went wrong</em></p>
-
         <p>When a breakpoint is reached, control is passed back to the phpdbg console, execution will not continue until
           the <em>next</em> command is issued, a breakpoint being reached looks something like:</p>
-
         <p><img src="/img/show-broken.png" alt="phpdbg broken"/></p>
-
         <p>Now is the time to get down to some serious <code>evil()</code>, er, I mean <code>eval()</code>.</p>
-
         <p>Direct access to <code>eval()</code> allows you to change <em>anything</em> at <em>any</em> time during
           execution. Helpful printing and listing commands help you to make sense of addresses and remind you of the
           names of the variables you want to <code>var_dump()</code>!</p>
-
         <p>Library code for this section:</p>
-
         <pre><code>&lt;?php
+
 class phpdbg {
     public function isGreat($greeting = null) {
-        printf(
-            &quot;%s: %s\n&quot;, __METHOD__, $greeting);
+        printf(&quot;%s: %s\n&quot;, __METHOD__, $greeting);
         return $this;
     }
 }
@@ -151,45 +126,27 @@ class phpdbg {
 $dbg = new phpdbg();
 
 var_dump($dbg-&gt;isGreat(&quot;PHP Rocks !!&quot;));
-?&gt;
 </code></pre>
-
         <h1>Being precise</h1>
-
         <p><em>Don't be sloppy, ever ... true story</em></p>
-
         <p>The ability to break at function entry, or even on a single statement, is not always exact enough. A single
           statement may have many opcodes and it could be any of those instructions that are ruining your day. phpdbg
           allows you to specify an exact opcode address and provides the ability to view the instructions of any method
           or function before execution occurs.</p>
-
         <p>Looking up addresses is made easy by the <code>print</code> command</p>
-
         <p><img src="/img/show-printing.png" alt="phpdbg verbose"/></p>
-
         <p>For simple scripts, like the library code in the last section, and times when you want as much detail as
           possible, the <code>quiet</code> flag can be changed to <code>0</code> (default is <code>1</code>):</p>
-
         <p><img src="/img/show-verbose.png" alt="phpdbg verbose"/></p>
-
         <h1>Mocking a server</h1>
-
         <p><em>Mocking is easy!</em></p>
-
         <p>Mocking a specific environment is child's play; simply include a bootstrap file before you run, or have your
           code include it. </p>
-
-        <p>An example of such a file can be found in the repository:</p>
-
-        <p>https://github.com/krakjoe/phpdbg/blob/master/web-bootstrap.php</p>
-
+        <p>An example of such a file can be found <a href="https://github.com/php/php-src/blob/master/sapi/phpdbg/web-bootstrap.php">in the repository</a>.</p>
         <h1>Advice you can keep</h1>
-
         <p><em>The reason for all the images...</em></p>
-
         <p>The best thing about this tutorial is you take all of the help with you when you install phpdbg. Don't be
           afraid to ask for <code>help</code>! :)</p>
-
         <p>Happy PHPing. :)</p>
       </div>
     </div>
@@ -224,8 +181,12 @@ var_dump($dbg-&gt;isGreat(&quot;PHP Rocks !!&quot;));
     </div>
   </div>
 </div>
-<script src="/js/jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/cpp.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/php.min.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet">
 <script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
