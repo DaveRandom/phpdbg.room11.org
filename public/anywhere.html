@@ -8,10 +8,10 @@
   <link rel="shortcut icon" href="/img/favicon.png">
   <title>Remote Debugging :: phpdbg</title>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/main.css" rel="stylesheet">
+  <link href="/css/main.min.css" rel="stylesheet">
   <!--[if lt IE 9]>
-  <script src="/js/html5shiv.js"></script>
-  <script src="/js/respond.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
 <body>
@@ -75,29 +75,24 @@
         <h1>Starting phpdbg in Remote Console Mode</h1>
         <p><em>Starting the server ...</em></p>
         <p>Simply open a terminal on the target machine and issue the command</p>
-        <pre><code>./phpdbg -l4000
-</code></pre>
+        <pre><code>./phpdbg -l4000</code></pre>
         <p>This will initialize phpdbg in Remote Console Mode, using port 4000 for stdin and port 8000 for stdout.</p>
         <p>To stop the service, send <em>SIGINT</em> to the phpdbg process, this will force it to bailout, as gracefully
           as it ever does.</p>
         <h2>Specific Ports</h2>
         <p>To listen on specific ports, the -l flag will accept a pair of ports in the following way:</p>
-        <pre><code>./phpdbg -l4000/8000
-</code></pre>
+        <pre><code>./phpdbg -l4000/8000</code></pre>
         <h2>Specific Interfaces</h2>
         <p>To bind to a specific interface, or all interfaces use the -a flag:</p>
-        <pre><code>./phpdbg -l4000 -a192.168.0.3
-</code></pre>
+        <pre><code>./phpdbg -l4000 -a192.168.0.3</code></pre>
         <p>Will bind the Remote Console to the interface with the specified address, while:</p>
-        <pre><code>./phpdbg -l4000 -a
-</code></pre>
+        <pre><code>./phpdbg -l4000 -a</code></pre>
         <p>Will bind the Remote Console to all available addresses.</p>
         <h1>Starting phpdbg-jui Anywhere</h1>
         <p><em>Java is everywhere, so is phpdbg ...</em></p>
         <p>A JRE is needed for the bundled remote client, given any operating system with a working installation of
           Java:</p>
-        <pre><code>java -jar /path/to/phpdbg-ui.jar
-</code></pre>
+        <pre><code>java -jar /path/to/phpdbg-ui.jar</code></pre>
         <p>Will initialize the bundled client, simply configure the settings accordingly and press <em>Connect</em></p>
         <p>If disconnection is normal, the environment persists - another team member can pick up the session where it
           is left off.</p>

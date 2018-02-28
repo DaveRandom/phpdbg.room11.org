@@ -8,10 +8,10 @@
   <link rel="shortcut icon" href="/img/favicon.png">
   <title>Getting Started :: phpdbg</title>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/main.css" rel="stylesheet">
+  <link href="/css/main.min.css" rel="stylesheet">
   <!--[if lt IE 9]>
-  <script src="/js/html5shiv.js"></script>
-  <script src="/js/respond.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
 <body>
@@ -90,8 +90,7 @@
  * @param $type  A constant PHPDBG_ type
  * @param $expr  The expression for the break command
  */
-function phpdbg_break(int $type = null, string $expr = null): void;
-</code></pre>
+function phpdbg_break(int $type = null, string $expr = null): void;</code></pre>
         <p>The following type constants are registered by phpdbg:</p>
         <ul>
           <li><code>PHPDBG_FILE</code></li>
@@ -102,8 +101,7 @@ function phpdbg_break(int $type = null, string $expr = null): void;
         <pre><code>/**
  * Clear breakpoints before continuing execution
  */
-function phpdbg_clear(): void;
-</code></pre>
+function phpdbg_clear(): void;</code></pre>
         <h1>Inspecting the environment</h1>
         <p><em>Finding out what went wrong</em></p>
         <p>When a breakpoint is reached, control is passed back to the phpdbg console, execution will not continue until
@@ -125,8 +123,7 @@ class phpdbg {
 
 $dbg = new phpdbg();
 
-var_dump($dbg-&gt;isGreat(&quot;PHP Rocks !!&quot;));
-</code></pre>
+var_dump($dbg-&gt;isGreat(&quot;PHP Rocks !!&quot;));</code></pre>
         <h1>Being precise</h1>
         <p><em>Don't be sloppy, ever ... true story</em></p>
         <p>The ability to break at function entry, or even on a single statement, is not always exact enough. A single
@@ -187,6 +184,6 @@ var_dump($dbg-&gt;isGreat(&quot;PHP Rocks !!&quot;));
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/cpp.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/php.min.js"></script>
 <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet">
-<script>hljs.initHighlightingOnLoad();</script>
+<script>/*global hljs*/hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
