@@ -1,0 +1,11 @@
+https://{default}/:
+
+  type: upstream
+  upstream: site:http
+
+  redirects:
+    paths:
+      /:
+        to: /introduction.html
+        prefix: false
+        code: 301

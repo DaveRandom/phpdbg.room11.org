@@ -1,14 +1,4 @@
-.list-pixel:before {
-    content: ">";
-    display: block;
-    font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
-    color: #aaa;
-    font-size: 28px;
-    position: absolute;
-    margin: -7px 0 0 -20px;
-}
-
-.list-pixel, .footer-credits li {
+.footer-credits li {
     padding-left: 20px;
 }
 
@@ -61,6 +51,7 @@ h1, h2, h3, h4 {
 }
 
 #footer {
+    position: relative;
     background: #323232;
     border-top: 5px solid #9955BB;
     padding-bottom: 0;
@@ -142,6 +133,18 @@ div.documentation-sidebar > ul > li {
 
 #footer-top a {
     color: #aaa;
+}
+
+#psh-logo-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: #666;
+}
+
+#psh-logo-container img {
+    height: 30px;
+    width: 150px;
 }
 
 pre {

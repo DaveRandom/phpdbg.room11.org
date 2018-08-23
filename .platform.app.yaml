@@ -1,0 +1,19 @@
+name: site
+type: php:7.2
+disk: 256
+
+build:
+  flavor: none
+
+web:
+  locations:
+    /:
+      root: public
+
+crons:
+  renewcert:
+    spec: 0 2 1,15 * *
+    cmd: |
+      if [ "$PLATFORM_BRANCH" = master ]; then
+        platform redeploy --yes --no-wait
+      fi
